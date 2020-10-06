@@ -8,12 +8,59 @@ namespace tt
   template<>
   constexpr bool isTrue<true> = true;
 
-
   template<class Type, class otherType>
   constexpr bool isSame = false;
 
   template<class Type>
   constexpr bool isSame<Type, Type> = true;
+
+  template<class Type>
+  constexpr bool isBasicType = false;
+
+  template<class Type>
+  constexpr bool isBasicType<volatile Type> = isBasicType<Type>;
+
+  template<class Type>
+  constexpr bool isBasicType<const Type> = isBasicType<Type>;
+
+  template<class Type>
+  constexpr bool isBasicType<const volatile Type> = isBasicType<Type>;
+
+  template<>
+  constexpr bool isBasicType<char> = true;
+
+  template<>
+  constexpr bool isBasicType<char8_t> = true;
+
+  template<>
+  constexpr bool isBasicType<char16_t> = true;
+
+  template<>
+  constexpr bool isBasicType<char32_t> = true;
+
+  template<>
+  constexpr bool isBasicType<wchar_t> = true;
+
+  template<>
+  constexpr bool isBasicType<short> = true;
+
+  template<>
+  constexpr bool isBasicType<int> = true;
+
+  template<>
+  constexpr bool isBasicType<long> = true;
+
+  template<>
+  constexpr bool isBasicType<long long> = true;
+
+  template<>
+  constexpr bool isBasicType<float> = true;
+
+  template<>
+  constexpr bool isBasicType<double> = true;
+
+  template<>
+  constexpr bool isBasicType<long double> = true;
 
   template <class Type>
   struct Identity
@@ -34,7 +81,7 @@ namespace tt
   };
 
   template <class firstType, class secondType, bool condition>
-  using ConditionalType_t = ConditionalType<firstType, secondType, condition>;
+  using ConditionalType_t = typename ConditionalType<firstType, secondType, condition>::type;
 
   template<class typeWithoutVolatile>
   struct RemoveVolatile
@@ -151,6 +198,6 @@ namespace tt
   constexpr bool isUnsigned_v = isUnsigned<Type>::value;
 
   template <class SignedType>
-  constexpr bool isSigned = !(isUnsigned<SignedType>::value);
+  constexpr bool isSigned = isBasicType<SignedType> && !(isUnsigned<SignedType>::value);
 
 }
