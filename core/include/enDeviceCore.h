@@ -7,6 +7,14 @@ class enRenderTargetCore;
 class enInputLayoutCore;
 class enVertexShaderCore;
 
+class enDeviceContextCore;
+class enSwapChainCore;
+
+struct DeviceContextAndSwapChain {
+  enDeviceContextCore * m_deviceContext;
+  enSwapChainCore* m_swapChain;
+};
+
 /**
  * @brief : create all the interfaces
  */
@@ -25,6 +33,9 @@ public:
 
   virtual enVertexShaderCore*
   createVertexShader() = 0;
+
+  virtual DeviceContextAndSwapChain*
+  createDeviceContextAndSwapChain() = 0;
   
   
 };
