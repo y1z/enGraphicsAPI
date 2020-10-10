@@ -119,4 +119,28 @@ namespace error_handle
 
 
 
+struct enInputLayoutData 
+{
+  std::string Name{ "" };
+  uint32 Index{ 0 };
+  uint32 Format{ 0 };
+  uint32 Slot{ 0 };
+  uint32 Alignment{ 0 };
+  uint32 SlotClass{ 0 };
+  uint32 InstanceData{ 0 };
+};
+
+
+struct sViewportData
+{
+  uint32 width{ 1u };
+  uint32 height{ 1u };
+  float minDepth{ 0.0f };
+  float maxDepth{ 0.0f };
+  float TopLeftX{ 0.0f };
+  float TopLeftY{ 0.0f };
+};
+
+
+
 

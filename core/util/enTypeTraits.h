@@ -2,72 +2,15 @@
 
 namespace tt 
 {
-  template<bool condition>
-  constexpr bool isTrue = false;
-
-  template<>
-  constexpr bool isTrue<true> = true;
-
-  template<class Type, class otherType>
-  constexpr bool isSame = false;
-
-  template<class Type>
-  constexpr bool isSame<Type, Type> = true;
-
-  template<class Type>
-  constexpr bool isBasicType = false;
-
-  template<class Type>
-  constexpr bool isBasicType<volatile Type> = isBasicType<Type>;
-
-  template<class Type>
-  constexpr bool isBasicType<const Type> = isBasicType<Type>;
-
-  template<class Type>
-  constexpr bool isBasicType<const volatile Type> = isBasicType<Type>;
-
-  template<>
-  constexpr bool isBasicType<char> = true;
-
-  template<>
-  constexpr bool isBasicType<char8_t> = true;
-
-  template<>
-  constexpr bool isBasicType<char16_t> = true;
-
-  template<>
-  constexpr bool isBasicType<char32_t> = true;
-
-  template<>
-  constexpr bool isBasicType<wchar_t> = true;
-
-  template<>
-  constexpr bool isBasicType<short> = true;
-
-  template<>
-  constexpr bool isBasicType<int> = true;
-
-  template<>
-  constexpr bool isBasicType<long> = true;
-
-  template<>
-  constexpr bool isBasicType<long long> = true;
-
-  template<>
-  constexpr bool isBasicType<float> = true;
-
-  template<>
-  constexpr bool isBasicType<double> = true;
-
-  template<>
-  constexpr bool isBasicType<long double> = true;
-
   template <class Type>
   struct Identity
   {
     using type = Type;
   };
 
+  /** 
+   * @brief Choses a type Depending on the result of the condition
+   */
   template<class firstType, class secondType, bool conditional = true>
   struct ConditionalType
   {
@@ -82,6 +25,124 @@ namespace tt
 
   template <class firstType, class secondType, bool condition>
   using ConditionalType_t = typename ConditionalType<firstType, secondType, condition>::type;
+
+  template <class Type, Type firstValue, Type secondValue , bool condition = true>
+  struct ConditionalValue {
+    static inline Type value = firstValue;  
+  };
+
+  template <class Type, Type firstValue, Type secondValue> 
+  struct ConditionalValue<Type, firstValue, secondValue, false>
+  {
+    static inline Type value = secondValue;  
+  };
+
+  template<bool condition>
+  struct ConditionalValueBool {
+    static inline bool value = ConditionalValue<bool,true,false,condition>::value;
+  };
+
+  template<bool condition>
+  constexpr bool isTrue = false;
+
+  template<>
+  constexpr bool isTrue<true> = true;
+
+  template<class Type, class otherType>
+  constexpr bool isSame = false;
+
+  template<class Type>
+  constexpr bool isSame<Type, Type> = true;
+
+
+  template<class Type>
+  constexpr bool isFloatType = false;
+
+  template<>
+  constexpr bool isFloatType<float> = true;
+
+  template<>
+  constexpr bool isFloatType<double> = true;
+
+  template<>
+  constexpr bool isFloatType<long double> = true;
+
+
+  template<class Type>
+  constexpr bool isIntegerType = false;
+
+  template<class Type>
+  constexpr bool isIntegerType<volatile Type> = isIntegerType<Type>;
+
+  template<class Type>
+  constexpr bool isIntegerType<const Type> = isIntegerType<Type>;
+
+  template<class Type>
+  constexpr bool isIntegerType<const volatile Type> = isIntegerType<Type>;
+
+  template<>
+  constexpr bool isIntegerType<short> = true;
+
+  template<>
+  constexpr bool isIntegerType<int> = true;
+
+  template<>
+  constexpr bool isIntegerType<long> = true;
+
+  template<>
+  constexpr bool isIntegerType<long long> = true;
+
+
+  /**
+   * @brief : A helper template used to distinguish which type is a primitive
+   */
+  template<class Type>
+  constexpr bool isPrimitiveType = false;
+
+  template<class Type>
+  constexpr bool isPrimitiveType<volatile Type> = isPrimitiveType<Type>;
+
+  template<class Type>
+  constexpr bool isPrimitiveType<const Type> = isPrimitiveType<Type>;
+
+  template<class Type>
+  constexpr bool isPrimitiveType<const volatile Type> = isPrimitiveType<Type>;
+
+  template<>
+  constexpr bool isPrimitiveType<char> = true;
+
+  template<>
+  constexpr bool isPrimitiveType<char8_t> = true;
+
+  template<>
+  constexpr bool isPrimitiveType<char16_t> = true;
+
+  template<>
+  constexpr bool isPrimitiveType<char32_t> = true;
+
+  template<>
+  constexpr bool isPrimitiveType<wchar_t> = true;
+
+  template<>
+  constexpr bool isPrimitiveType<short> = true;
+
+  template<>
+  constexpr bool isPrimitiveType<int> = true;
+
+  template<>
+  constexpr bool isPrimitiveType<long> = true;
+
+  template<>
+  constexpr bool isPrimitiveType<long long> = true;
+
+  template<>
+  constexpr bool isPrimitiveType<float> = true;
+
+  template<>
+  constexpr bool isPrimitiveType<double> = true;
+
+  template<>
+  constexpr bool isPrimitiveType<long double> = true;
 
   template<class typeWithoutVolatile>
   struct RemoveVolatile
@@ -194,10 +255,40 @@ namespace tt
     static constexpr bool value = true;
   };
 
+  template<class unsignedType>
+  struct makeUnsigned {
+    using type = unsignedType;
+  };
+
+  template<>
+  struct makeUnsigned<char> {
+    using type = unsigned char;
+  };
+
+  template<>
+  struct makeUnsigned<short> {
+    using type = unsigned short;
+  };
+
+  template<>
+  struct makeUnsigned<int> {
+    using type = unsigned int;
+  };
+
+  template<>
+  struct makeUnsigned<long> {
+    using type = unsigned long;
+  };
+
+  template<>
+  struct makeUnsigned<long long> {
+    using type = unsigned long long;
+  };
+
   template<class Type>
   constexpr bool isUnsigned_v = isUnsigned<Type>::value;
 
   template <class SignedType>
-  constexpr bool isSigned = isBasicType<SignedType> && !(isUnsigned<SignedType>::value);
+  constexpr bool isSigned = isPrimitiveType<SignedType> && !(isUnsigned<SignedType>::value);
 
 }

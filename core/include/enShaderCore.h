@@ -12,11 +12,14 @@ public:// constructors
   enShaderCore(const enShaderCore&) = default;
   enShaderCore(enShaderCore&&) noexcept = default;
 
-  enShaderCore& operator= (const enShaderCore&) = default;
-  enShaderCore& operator= (enShaderCore&&) noexcept = default;
-
   virtual
-  ~enShaderCore() = default;
+  ~enShaderCore() noexcept = default;
+
+public:// operators
+  enShaderCore& operator=(const enShaderCore&) = default;
+
+  enShaderCore& operator=(enShaderCore&&) noexcept = default;
+
 
   /**
    * @brief takes a file path to later use to compile the shader.
@@ -35,7 +38,7 @@ protected:
  * @para shaderVersion : where the file is located.
  */
   virtual ErrorCode
-  compileShader(std::string_view filePath,
+  compileShader(std::string_view shader,
                 std::string_view shaderVersion) = 0;
 
 public:
@@ -44,4 +47,5 @@ public:
   /** The variable that contains which version of the shader we use.*/
   std::string m_shaderVersion;
 };
+
 
