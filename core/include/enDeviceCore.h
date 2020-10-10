@@ -24,7 +24,7 @@ public:
   createInputLayout(const enInputLayoutData& data) = 0;
 
   virtual enVertexShaderCore*
-  createVertexShadre() = 0;
+  createVertexShader() = 0;
   
   
 };

@@ -1,33 +1,11 @@
 #pragma once
+#include "core/include/enDeviceCore.h"
 
 
 class enGraphicsApiCore 
 {
 public:
-  /// enVertexShaderCore*
 
-  /// enShaderProgramCore*
-
-  /// enPixelShaderCore*
-
-  /// enIndexBuffer*
-
-  /// enVertexBufferCore*
-
-  /// enConstBuffer*
-
-  /// enDeviceCore*
-
-  /// enDeviceContextCore*
-
-  /// enTextureCore*
-
-  /// enRenderTarget*
-
-  /// enDepthStencil*
-
-  /// enInputLayout*
-
-  /// enViewPort*
+  enDeviceCore * m_device;
 };
 
