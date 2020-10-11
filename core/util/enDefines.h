@@ -117,6 +117,27 @@ namespace error_handle
   #define EN_LOG_DEBUG_INFO(errorDesc)
 #endif
 
+/**
+ * Utility Macros
+ */
+#define SAFE_DELETE(ptr) if(nullptr != ptr){ delete ptr; ptr = nullptr;}
+#define SAFE_DELETE_ARRAY(ptrArray) if(nullptr != ptrArray) {delete[] ptrArray; ptrArray= nullptr;}
+
+#define CHAR_TEXT(someText) #someText;
+#define WCHAR_TEXT(someText) L#someText;
+#define CHAR16_TEXT(someText) u#someText;
+#define CHAR32_TEXT(someText) U#someText;
+#if __cpp_char8_t
+  #define CHAR8_TEXT(someText) u8#someText;
+#endif //__cpp_char8_t
+
+#if UNICODE || _UNICODE
+  #define CURRENT_TEXT(someText) WCHAR_TEXT(someText)
+#else
+  #define CURRENT_TEXT(someText) CHAR_TEXT(someText)
+#endif
+
+
 
 
 struct enInputLayoutData 
