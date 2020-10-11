@@ -1,6 +1,4 @@
 #pragma once
-#include "core/include/enShaderCore.h"
-
 /**
  * FORWARD DECORATIONS
  */

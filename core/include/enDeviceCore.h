@@ -16,10 +16,12 @@ struct DeviceContextAndSwapChain {
 };
 
 /**
- * @brief : create all the interfaces
+ * @class enDeviceCore : takes care of creating every single object in the game
  */
 class enDeviceCore 
 {
+public:
+
 public:
 
   virtual enTextureCore*

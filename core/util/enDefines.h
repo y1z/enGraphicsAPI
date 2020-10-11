@@ -70,7 +70,7 @@ namespace error_handle
   /**
    * @brief logs and error
    */
-  static void
+  inline static void
   logErrorWithMessage(const ::ErrorCode error,
                       const char* message)
   {
@@ -81,17 +81,17 @@ namespace error_handle
     
   }
 
-  static void
+  inline static void
   logDebugData(const uint32_t line,
                const char* functionName,
                const char* fileName,
                const char* errorDesc)
   {
-    std::clog << "\n================================================================\n"
+    std::cerr << "\n================================================================\n"
       << "description of Error {" << errorDesc << "}\n\n"
       << "file of Error : " << fileName << "\n"
       << "function of error : " << functionName << "\n"
-      << "line where error was reported [ " << line << "\n\n";
+      << "line where error was reported [ " << line << "]\n\n";
   }
 
   /** Used to know if a function has committed and error.
@@ -121,7 +121,7 @@ namespace error_handle
 
 struct enInputLayoutData 
 {
-  std::string Name{ "" };
+  std::string Name{ "\0" };
   uint32 Index{ 0 };
   uint32 Format{ 0 };
   uint32 Slot{ 0 };
