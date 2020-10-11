@@ -4,12 +4,9 @@
 #include "core/util/enTypeTraits.h"
 #include <type_traits>
 
-
 int main()
 {
   std::cout << std::boolalpha
-    //<< tt::isTrue< (1 > 2) > << '\n'
-    //<< tt::isTrue< (1 < 2) > << '\n'
     << "signed types "
     << tt::isUnsigned_v<bool> << "\n"
     << tt::isUnsigned_v<char> << '\n'
