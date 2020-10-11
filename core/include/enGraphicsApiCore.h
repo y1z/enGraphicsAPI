@@ -1,4 +1,5 @@
 #pragma once
+#include "core/util/enDefines.h"
 #include "core/include/enDeviceCore.h"
 #include "core/include/enDeviceContextCore.h"
 #include "core/include/enSwapChainCore.h"
@@ -17,7 +18,12 @@ public:
 
   enGraphicsApiCore(const enGraphicsApiCore&) = delete;
   enGraphicsApiCore(enGraphicsApiCore&&) noexcept = delete;
-  virtual ~enGraphicsApiCore() = default;
+  virtual ~enGraphicsApiCore()
+  {
+    SAFE_DELETE(m_device) 
+    SAFE_DELETE(m_deviceContext) 
+    SAFE_DELETE(m_swapChain) 
+  }
 public:
   enGraphicsApiCore& operator= (const enGraphicsApiCore&) = delete;
   enGraphicsApiCore& operator= (enGraphicsApiCore&&) noexcept = delete;

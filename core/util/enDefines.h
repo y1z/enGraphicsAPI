@@ -1,5 +1,4 @@
 #pragma once
-#include <cassert>
 #include <cstdint>
 #include <iostream>
 
@@ -127,6 +126,7 @@ namespace error_handle
 #define WCHAR_TEXT(someText) L#someText;
 #define CHAR16_TEXT(someText) u#someText;
 #define CHAR32_TEXT(someText) U#someText;
+
 #if __cpp_char8_t
   #define CHAR8_TEXT(someText) u8#someText;
 #endif //__cpp_char8_t
@@ -158,8 +158,8 @@ struct sViewportData
   uint32 height{ 1u };
   float minDepth{ 0.0f };
   float maxDepth{ 0.0f };
-  float TopLeftX{ 0.0f };
-  float TopLeftY{ 0.0f };
+  float topLeftX{ 0.0f };
+  float topLeftY{ 0.0f };
 };
 
 

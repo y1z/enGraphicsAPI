@@ -18,6 +18,6 @@ public:
 public:
 
   virtual ErrorCode
-  init(const sViewportData&) = 0;
+  init(const sViewportData&data) = 0;
   
 };
