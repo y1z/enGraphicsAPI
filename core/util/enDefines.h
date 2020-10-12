@@ -29,6 +29,14 @@ enum class ErrorCode : int32
   unpreparedForOperation = -4, /*!< means that the function requires something else to happen before it works*/
 };
 
+enum class MeshType : uint32 
+{
+  triangleMesh, 
+  quadMesh,
+  lineMesh,
+  pointMesh,
+};
+
 
 /**
  * functions for the management of error codes
