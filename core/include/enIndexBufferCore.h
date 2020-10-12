@@ -2,7 +2,11 @@
 #include <cstddef>
 #include <vector>
 
-/** @class enIndexBufferCore : Interface for a index buffer*/
+/** 
+ * @class enIndexBufferCore : Interface for a index buffer
+ * @tparam IndexType : is so the index buffer can be used with many types of
+ * indexes
+ */
 template<class IndexType>
 class enIndexBufferCore 
 {
@@ -16,7 +20,14 @@ public: // operators
   operator=(const enIndexBufferCore&) = default;
 
   enIndexBufferCore&
-  operator=(enIndexBufferCore&&)noexcept = default;
+  operator=(enIndexBufferCore&&) noexcept = default;
+
+public: 
+  /**
+   * @brief initializes the index buffer
+   */
+  virtual void
+  init(const std::vector<IndexType>& indexContainer) = 0;
 
 public:
 

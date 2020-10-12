@@ -6,12 +6,16 @@ class enInputLayoutCore;
 
 class enVertexShaderCore;
 class enPixelShaderCore;
+class enShaderProgramCore;
 
 class enDeviceContextCore;
 class enSwapChainCore;
-class enShaderProgramCore;
 
 
+
+/**
+ * @class enDeviceContextCore : a interface for preparing other interface to be used.
+ */
 class enDeviceContextCore 
 {
 public:// functions
@@ -49,5 +53,17 @@ public:
    */
   virtual void
   setShaderProgram(const enShaderProgramCore& shaderProgram) = 0;
+
+  /**
+   * @brief sets up the vertexShader.
+   */
+  virtual void
+  setVertexShader(const enVertexShaderCore& vertexShader) = 0;
+
+  /**
+   * @brief sets up the vertexShader.
+   */
+  virtual void
+  setPixelShader(const enVertexShaderCore& vertexShader) = 0;
   
 };

@@ -33,6 +33,9 @@ public:
   virtual ErrorCode
   initFromTexture(const enTexture2DCore& texture) = 0;
 
+  virtual bool
+  draw() = 0;
+
   /**
    * @returns The height of the render target
    */
