@@ -1,6 +1,6 @@
 #pragma once
-#include "core/util/enDefines.h"
 #include <string>
+#include "core/util/enDefines.h"
 
 /**
  * @class enTexture2DCore : a int3erface to the texture of the api

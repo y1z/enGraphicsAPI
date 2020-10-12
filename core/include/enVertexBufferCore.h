@@ -1,5 +1,5 @@
 #pragma once
-#include <cstddef> // for size_t
+#include <cstddef>
 
 /**
  * @class enVertexBufferCore : represents a interface for the vertex buffer.

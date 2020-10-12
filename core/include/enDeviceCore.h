@@ -1,7 +1,8 @@
 #pragma once
-#include "core/util/enDefines.h"
 #include <string_view>
 #include <memory>
+
+#include "core/util/enDefines.h"
 
 class enTextureCore;
 class enRenderTargetCore;

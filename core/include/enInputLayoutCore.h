@@ -1,6 +1,6 @@
 #pragma once
-#include "core/util/enDefines.h"
 #include <vector>
+#include "core/util/enDefines.h"
 
 /**
  * @class enInputLayout : interface for controlling how are data is formated to the Graphics card.

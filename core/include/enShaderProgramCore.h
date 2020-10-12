@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include "core/util/enDefines.h"
 #include "core/include/enVertexShaderCore.h"
 #include "core/include/enPixelShaderCore.h"

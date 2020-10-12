@@ -1,7 +1,8 @@
 #pragma once
+#include <string_view>
+
 #include "core/util/enDefines.h"
 
-#include <string_view>
 
 /**
  * @class enShaderRequirementsCore : imposes the requirements that every type of shader 
