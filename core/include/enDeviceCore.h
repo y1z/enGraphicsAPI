@@ -55,4 +55,9 @@ public:
   virtual std::unique_ptr<enPixelShaderCore>
   createPixelShader(std::string_view shaderFilePath) = 0;
 
+  /** @returns a pointer to a instance of a enShaderProgramCore used to manipulate derived classes*/
+  virtual std::unique_ptr<enShaderProgramCore>
+  createShaderProgram(const enShaderProgramData&data) = 0;
+
+
 };

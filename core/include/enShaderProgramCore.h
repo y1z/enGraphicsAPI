@@ -39,11 +39,21 @@ public:// functions
 
   /**
   * @brief initializes the shader program
-  * @returns 
+  * @returns ErrorCode::success when the operation succeeds if the operation
+  * did not succeed it returns something else.
   */
   virtual ErrorCode
   init(std::unique_ptr<enVertexShaderCore>&& pixelShader,
        std::unique_ptr<enVertexShaderCore>&& vertexShader) = 0;
+
+  /**
+  * @brief initializes the shader program
+  * @returns ErrorCode::success when the operation succeeds if the operation
+  * did not succeed it returns something else.
+  */
+  virtual ErrorCode
+  init(const enShaderProgramCore& data) = 0;
+
 
 
   enVertexShaderCore*
@@ -58,9 +68,28 @@ public:// functions
     return m_pixelShader.get();  
   }
 
+
+  [[nodiscard]] enVertexShaderCore*
+  getVertexShader() const
+  {
+    return m_vertexShader.get();
+  }
+
+  [[nodiscard]] enPixelShaderCore*
+  getPixelShader() const
+  {
+    return m_pixelShader.get();  
+  }
+
+  /**
+   * @brief makes the shader's know of each-others existence.
+   */
   virtual bool
   linkShaders() = 0;
 
+  /**
+   * @brief makes the shader .
+   */
   virtual bool
   detachShaders() = 0;
 

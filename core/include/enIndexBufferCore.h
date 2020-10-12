@@ -1,7 +1,6 @@
 #pragma once
 #include <cstddef>
 #include <vector>
-#include "enTypeTraits.h"
 
 /** @class enIndexBufferCore : Interface for a index buffer*/
 template<class IndexType>
@@ -11,8 +10,7 @@ public://constructors and destructor
   enIndexBufferCore(const enIndexBufferCore&) = default;
   enIndexBufferCore(enIndexBufferCore&&) noexcept = default;
 
-  virtual  
-  ~enIndexBufferCore() noexcept = default;
+  virtual ~enIndexBufferCore() noexcept = default;
 public: // operators
   enIndexBufferCore&
   operator=(const enIndexBufferCore&) = default;
@@ -22,13 +20,9 @@ public: // operators
 
 public:
 
-  [[nodiscard]] virtual size_t
-  getIndexCount() = 0;
-  
-  [[nodiscard]] virtual size_t
-  getIndexSize() = 0;
-
-
+  /** @brief container for the indexes of the index buffer*/
   std::vector<IndexType> m_indexes;
-
 };
+
+using unsigned16IndexBuffer = enIndexBufferCore<uint16_t>;
+using unsigned32IndexBuffer = enIndexBufferCore<uint32_t>;

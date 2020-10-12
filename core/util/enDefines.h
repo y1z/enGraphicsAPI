@@ -127,8 +127,9 @@ namespace error_handle
 #define CHAR16_TEXT(someText) u#someText;
 #define CHAR32_TEXT(someText) U#someText;
 
-#if __cpp_char8_t
+#ifdef __cpp_char8_t
   #define CHAR8_TEXT(someText) u8#someText;
+
 #endif //__cpp_char8_t
 
 #if UNICODE || _UNICODE
@@ -152,7 +153,7 @@ struct enInputLayoutData
 };
 
 
-struct sViewportData
+struct enViewportData
 {
   uint32 width{ 1u };
   uint32 height{ 1u };
@@ -162,6 +163,20 @@ struct sViewportData
   float topLeftY{ 0.0f };
 };
 
+/**
+ * @brief A type that contains all the necessary arguments to initialize a 
+ * shader program.
+ */
+struct enShaderProgramData
+{
+  /**@brief a file path to a vertex shader*/
+  std::string_view filePathToVertexShader;
+  /**@brief a string that describes which version of the shader is being used. */
+  std::string_view vertexShaderVersion;
 
+  /**@brief a file path to a pixel shader*/
+  std::string_view filePathToPixelShader;
+  /**@brief a string that describes which version of the shader is being used. */
+  std::string_view pixelShaderVersion;
 
-
+};

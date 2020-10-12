@@ -22,7 +22,9 @@ public:
    * @brief : initializes a render target.
    */
   virtual ErrorCode
-  initRenderTarget(const uint32 width,const uint32 height, int format) = 0;
+  initRenderTarget(const uint32 width,
+                   const uint32 height,
+                   int format) = 0;
 
 
   /**
