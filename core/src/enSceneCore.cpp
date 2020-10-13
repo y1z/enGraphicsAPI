@@ -20,7 +20,7 @@ enSceneCore::drawScene()
 enModelCore&
 enSceneCore::getModel(const size_t index) 
 {
-  assert( (!m_models.empty() && m_models.size() > index ), "accessing empty vector or invalid index");
+  assert( (!m_models.empty() && m_models.size() > index ) && "accessing empty vector or invalid index");
   return m_models[index];
 }
 

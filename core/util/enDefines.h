@@ -195,3 +195,19 @@ struct enShaderProgramData
   std::string_view pixelShaderVersion;
 
 };
+
+
+struct enSamplerData
+{
+  uint32 filter{ 0 };/*!< how to filter the data */ 
+  uint32 addressU{ 0 };/*<! how to address the x axis */
+  uint32 addressV{ 0 }; /*<! how to address the y axis */
+
+  uint32 AnisotropicLevel{ 1 };//<! controls the how anisotropic the texture is 
+
+  int32 comparingFunc{ 0 };//<! how to compare 
+
+  float minLod = { 0.0f };//<! lowest level of detail 
+  float maxLod = { 0.0f };//<! highest level of detail
+};
+
