@@ -8,7 +8,7 @@
 
 
 /**
- * @brief is the interface for using individual meshes.
+ * @brief Is the interface for using individual meshes.
  */
 class enMeshCore : public enDrawRequirements 
 {

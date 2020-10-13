@@ -27,6 +27,13 @@ public:
 public:
   enGraphicsApiCore& operator= (const enGraphicsApiCore&) = delete;
   enGraphicsApiCore& operator= (enGraphicsApiCore&&) noexcept = delete;
+public:
+
+  /**
+   * @brief : initializes the api.
+   */
+  virtual ErrorCode
+  init( ) = 0;
 
 
     

@@ -27,6 +27,7 @@ enum class ErrorCode : int32
   shaderCompileError = -2, /*!< means that a shader has failed to compile*/
   badArgument = -3, /*!< means that one of the arguments passed to a function is ill-formed */
   unpreparedForOperation = -4, /*!< means that the function requires something else to happen before it works*/
+  needsImplementation = -5,
 };
 
 enum class MeshType : uint32 
@@ -66,6 +67,10 @@ namespace error_handle
 
       case ErrorCode::success:
       std::cerr << "no error occurred\n";
+      break;
+
+      case ErrorCode::needsImplementation:
+      std::cerr << "operation does NOT have a implementation\n";
       break;
 
       default:
@@ -141,9 +146,9 @@ namespace error_handle
 #endif //__cpp_char8_t
 
 #if UNICODE || _UNICODE
-  #define CURRENT_TEXT(someText) WCHAR_TEXT(someText)
+  #define TEXT_T(someText) WCHAR_TEXT(someText)
 #else
-  #define CURRENT_TEXT(someText) CHAR_TEXT(someText)
+  #define TEXT_T(someText) CHAR_TEXT(someText)
 #endif
 
 
