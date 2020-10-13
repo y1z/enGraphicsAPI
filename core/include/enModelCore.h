@@ -12,7 +12,9 @@ class enModelCore
 public:
   using meshContainer = std::vector<std::unique_ptr<enMeshCore>>;
 public:
-  enModelCore() = default;
+  enModelCore()
+    :m_transform(enMath::identityMat4x4)
+  {}
   enModelCore(const enModelCore &) = delete;
   enModelCore(enModelCore &&)noexcept = default;
   ~enModelCore() noexcept = default;
@@ -60,6 +62,11 @@ public:
   cend() const;
 
 protected:
+  /** @brief represents the transform of the model.*/
+  enMath::enMat4x4 m_transform; 
+
   /** @brief contains the mesh */
   meshContainer m_meshes;
+
+
 };

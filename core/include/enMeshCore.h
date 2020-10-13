@@ -13,7 +13,8 @@
 class enMeshCore : public enDrawRequirements 
 {
 public:
-  enMeshCore() = default;
+  enMeshCore()
+    :m_transform(enMath::identityMat4x4){}
   enMeshCore(const enMeshCore&) = delete;
   enMeshCore(enMeshCore&&) noexcept = default;
   virtual ~enMeshCore() noexcept = default;
@@ -32,6 +33,12 @@ public:
   
 
 public:
+
+  /**
+   * @brief represents the transform of the current mesh.
+   */
+  enMath::enMat4x4 m_transform; 
+
   /**
    * @brief contains all vertex data of the mesh.
    */
@@ -42,3 +49,5 @@ public:
    */
   std::unique_ptr<unsigned32IndexBuffer> m_indexData;
 };
+
+

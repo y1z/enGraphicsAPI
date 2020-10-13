@@ -17,7 +17,9 @@ public:
    */
   using modelContainer = std::vector<enModelCore>;
 public://constructor
-  enSceneCore() = default;
+  enSceneCore()
+  : m_transform(enMath::identityMat4x4){}
+
   enSceneCore(const enSceneCore&) = delete;
   enSceneCore(enSceneCore&&) noexcept = default;
   ~enSceneCore() noexcept = default;
@@ -65,6 +67,8 @@ public:
   cend() const;
 
 protected:
+  /** @brief represents the transform of the entire scene*/
+  enMath::enMat4x4 m_transform;
 
   /** @brief contains all the models of the scene*/
   modelContainer m_models;
