@@ -18,6 +18,8 @@ using uint32 = std::uint32_t;/*!< a unsigned integer of 32-bits*/
 using uint64 = std::uint64_t;/*!< a unsigned integer of 64-bits*/
 
 
+
+
 /**
  * @brief : an enum used to represent the errors that can occur.
  */
@@ -154,8 +156,14 @@ namespace error_handle
 #endif
 
 
+/**
+ * Data Structures
+ */
 
 
+/**
+ * @brief Used to know the input layout is formatted.
+ */
 struct enInputLayoutData 
 {
   std::string Name{ "\0" };
@@ -168,6 +176,9 @@ struct enInputLayoutData
 };
 
 
+/**
+ * @brief Controls how the view port will work.
+ */
 struct enViewportData
 {
   uint32 width{ 1u };
@@ -196,7 +207,9 @@ struct enShaderProgramData
 
 };
 
-
+/**
+ * @brief Controls what the sampler will do.
+ */
 struct enSamplerData
 {
   uint32 filter{ 0 };/*!< how to filter the data */ 
@@ -210,4 +223,17 @@ struct enSamplerData
   float minLod = { 0.0f };//<! lowest level of detail 
   float maxLod = { 0.0f };//<! highest level of detail
 };
+
+
+/**
+ * Utility TYPE DEFS
+ */
+
+/** @brief this type def exist to make it easier to switch out the underlying
+ * type which is use in the vertex shaders.
+ */
+using enVertexType = enMath::enVec4;
+
+
+
 

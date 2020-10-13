@@ -1,16 +1,24 @@
 #pragma once
-class enTextureCore;
-class enRenderTargetCore;
+class enTextureCore; // check
+class enRenderTargetCore;// check
 
-class enInputLayoutCore;
+class enInputLayoutCore;// check
 
-class enVertexShaderCore;
+class enVertexBufferCore;// check 
+class unsigned32IndexBuffer; // check
+
+class enVertexShaderCore; // check
 class enPixelShaderCore;
 class enShaderProgramCore;
 
 class enDeviceContextCore;
 class enSwapChainCore;
 
+class enSamplerCore;
+
+class enMeshCore;
+class enModelCore;
+class enSceneCore;
 
 
 /**
@@ -36,34 +44,45 @@ public:
   setTexture(const enTextureCore& texture) = 0;
 
   /**
-   * @brief prepares render target to be used.
+   * @brief prepares render-target to be used.
    */
   virtual void
   setRenderTarget(const enRenderTargetCore& rt) = 0;
 
 
   /**
-   * @brief sets up the input layout.
+   * @brief prepares the input layout to be used.
    */
   virtual void
   setInputLayout(const enInputLayoutCore& inputLayout) = 0;
 
   /**
-   * @brief sets up the input layout.
+   * @brief prepares the input layout to be used.
    */
   virtual void
   setShaderProgram(const enShaderProgramCore& shaderProgram) = 0;
 
   /**
-   * @brief sets up the vertexShader.
+   * @brief prepares the vertexShader to be used.
    */
   virtual void
   setVertexShader(const enVertexShaderCore& vertexShader) = 0;
 
   /**
-   * @brief sets up the vertexShader.
+   * @brief prepares the vertexShader to be used.
    */
   virtual void
-  setPixelShader(const enVertexShaderCore& vertexShader) = 0;
+  setPixelShader(const enPixelShaderCore& pixelShader) = 0;
+
+  /**
+   * @brief prepares the vertex buffer to be used .
+   */
+  virtual void
+  setVertexBuffer(const enVertexBufferCore& vertexBuffer) = 0;
   
+  /**
+   * @brief prepares the vertexShader to be used.
+   */
+  virtual void
+  setIndexBuffer(const unsigned32IndexBuffer& indexBuffer) = 0;
 };
