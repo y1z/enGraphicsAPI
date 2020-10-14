@@ -1,14 +1,46 @@
-#include "directX/include/enDeviceDX11.h"
+#include "directX_Impl/include/enDeviceDX11.h"
 #include "core/include/enShaderProgramCore.h"
-#include"core/include/enTextureCore.h"
+#include "core/include/enTextureCore.h"
 
-#include <d3d11.h>
 #include <d3dcompiler.h>
+#include <dxgi.h>
 
-ErrorCode 
+enDeviceDX11::enDeviceDX11()
+:m_dx11Device(nullptr),
+m_dx11Factory(nullptr)
+{
+}
+
+enDeviceDX11::~enDeviceDX11() noexcept
+{
+  if( nullptr != m_dx11Device )
+  {
+    m_dx11Device->Release();
+    m_dx11Device = nullptr;
+  }
+  if( nullptr != m_dx11Factory )
+  {
+    m_dx11Factory->Release();
+    m_dx11Factory = nullptr;
+  }
+}
+
+ErrorCode
 enDeviceDX11::init(enDeviceContextCore& deviceContext)
 {
-  return ErrorCode::failedCreation;
+
+  ErrorCode result = initInternalFactory();
+  if( ErrorCode::success != result )
+  {
+    EN_LOG_DEBUG_INFO("The Factory failed to be created.")
+    return result;
+  }
+
+  IDXGIAdapter1* adapter = createAdapter();
+
+
+  
+  return result;
 }
 
 enTextureCore* 
@@ -88,4 +120,35 @@ unsigned32IndexBuffer*
 enDeviceDX11::createIndexBuffer(const std::vector<uint32>& indexes)
 {
   return nullptr;
+}
+
+ErrorCode
+enDeviceDX11::initInternalFactory()
+{
+  const HRESULT hr = CreateDXGIFactory1(__uuidof(IDXGIFactory1),
+                                        reinterpret_cast< void** >(&m_dx11Factory));
+
+  if( hr != S_OK)
+  {
+    return ErrorCode::failedCreation;
+  }
+
+  return ErrorCode::success;
+}
+
+IDXGIAdapter1*
+enDeviceDX11::createAdapter() const
+{
+  UINT adapterIndex = 0u;
+  IDXGIAdapter1* adapter;
+  const HRESULT adpatersResult = m_dx11Factory->EnumAdapters1(adapterIndex ,&adapter);
+
+  if( adpatersResult != S_OK )
+  {
+    EN_LOG_DEBUG_INFO("The Factory failed to be created.")
+
+    return nullptr;
+  }
+
+  return adapter;
 }
