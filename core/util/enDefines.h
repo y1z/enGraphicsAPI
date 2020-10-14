@@ -6,7 +6,6 @@
 /**
  * Integer TYPE DEFS
  */
-
 using int8 = std::int8_t;  /*!< a signed integer of 8-bits*/
 using int16 = std::int16_t;/*!< a signed integer of 16-bits*/
 using int32 = std::int32_t;/*!< a signed integer of 32-bits*/
@@ -16,8 +15,6 @@ using uint8 = std::uint8_t;  /*!< a unsigned integer of 8-bits*/
 using uint16 = std::uint16_t;/*!< a unsigned integer of 16-bits*/
 using uint32 = std::uint32_t;/*!< a unsigned integer of 32-bits*/
 using uint64 = std::uint64_t;/*!< a unsigned integer of 64-bits*/
-
-
 
 
 /**

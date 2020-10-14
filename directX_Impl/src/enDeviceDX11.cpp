@@ -1,7 +1,9 @@
 #include "directX_Impl/include/enDeviceDX11.h"
+#include "directX_Impl/include/enDeviceContextDX11.h"
 #include "core/include/enShaderProgramCore.h"
 #include "core/include/enTextureCore.h"
 
+#include <array>
 #include <d3dcompiler.h>
 #include <dxgi.h>
 
@@ -28,8 +30,20 @@ enDeviceDX11::~enDeviceDX11() noexcept
 ErrorCode
 enDeviceDX11::init(enDeviceContextCore& deviceContext)
 {
+  enDeviceContextDX11* directX11DeviceContext =
+    dynamic_cast< enDeviceContextDX11* >(&deviceContext);
+  ErrorCode result;
+  if( nullptr != directX11DeviceContext )
+  {
+    result = ErrorCode::success;
+  }
+  else
+  {
+    EN_LOG_DEBUG_INFO("Using a wrong interface, would you kindly use the directX one.")
+    result = ErrorCode::badArgument;
+  }
 
-  ErrorCode result = initInternalFactory();
+  result = initInternalFactory();
   if( ErrorCode::success != result )
   {
     EN_LOG_DEBUG_INFO("The Factory failed to be created.")
@@ -37,6 +51,51 @@ enDeviceDX11::init(enDeviceContextCore& deviceContext)
   }
 
   IDXGIAdapter1* adapter = createAdapter();
+  if( nullptr == adapter )
+  {
+    return ErrorCode::failedCreation;
+  }
+
+  DXGI_ADAPTER_DESC1 adapterDescriptor;
+  HRESULT hr = adapter->GetDesc1(&adapterDescriptor);
+  if( hr != S_OK )
+  {
+    EN_LOG_DEBUG_INFO("Passed a invalid parameter ")
+    return ErrorCode::badArgument;
+  }
+
+  const std::array<const D3D_DRIVER_TYPE, 3> driverOptions = 
+  {
+    D3D_DRIVER_TYPE::D3D_DRIVER_TYPE_HARDWARE,
+    D3D_DRIVER_TYPE::D3D_DRIVER_TYPE_WARP,
+    D3D_DRIVER_TYPE::D3D_DRIVER_TYPE_NULL,
+  };
+
+  UINT deviceFlags = 0;
+#if !NDEBUG
+  deviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
+  deviceFlags |= D3D11_CREATE_DEVICE_DEBUGGABLE;// requires DirectX feature level 11.1
+#endif // !NDEBUG
+
+  const std::array<const D3D_FEATURE_LEVEL ,3> featureLevels
+  {
+    D3D_FEATURE_LEVEL::D3D_FEATURE_LEVEL_12_1,
+    D3D_FEATURE_LEVEL::D3D_FEATURE_LEVEL_12_0,
+    D3D_FEATURE_LEVEL::D3D_FEATURE_LEVEL_11_1,
+  };
+  D3D_FEATURE_LEVEL selectedFeatureLevel;
+  for( const auto dirvers : driverOptions )
+  {
+    D3D11CreateDevice(adapter,
+                      dirvers,
+                      NULL,
+                      deviceFlags,
+                      &featureLevels[0],
+                      featureLevels.size(),
+                      D3D11_SDK_VERSION ,
+                      &m_dx11Device,
+                      &selectedFeatureLevel,);
+  }
 
 
   
@@ -152,3 +211,4 @@ enDeviceDX11::createAdapter() const
 
   return adapter;
 }
+

@@ -25,6 +25,7 @@ class enSceneCore;// check
  */
 class enDeviceContextCore 
 {
+  friend class enDeviceContextDX11;
 public:// functions
   enDeviceContextCore() = default;
   enDeviceContextCore(const enDeviceContextCore &) = delete;
@@ -98,6 +99,8 @@ public:
   /** @brief prepares a mesh for rendering. */
   virtual void
   setMesh(const enMeshCore& mesh) = 0;
+
+
 };
 
 

@@ -8,6 +8,8 @@
 class enDeviceDX11 : public enDeviceCore 
 {
 public:
+  friend class enDeviceContextDX11;
+public:
   enDeviceDX11();
   enDeviceDX11(const enDeviceDX11&) = delete;
   enDeviceDX11(enDeviceDX11&&) noexcept = delete;
@@ -21,7 +23,7 @@ public:
   operator=(enDeviceDX11&&) noexcept = delete;
 public:
 
-  /** @brief initializes the device context*/
+  /** @brief initializes the device along with the device-context */
   [[nodiscard]] ErrorCode
   init(enDeviceContextCore& deviceContext)override;
 
@@ -94,7 +96,6 @@ private: //functions
    */
   [[nodiscard]] IDXGIAdapter1*  
   createAdapter() const;
-
 
 
 

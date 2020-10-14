@@ -42,7 +42,7 @@ public:
   enDeviceCore& operator=(enDeviceCore&&) = delete;
 public:
 
-  /** @brief initializes the device context*/
+  /** @brief initializes the device along with the device-context */
   virtual ErrorCode
   init(enDeviceContextCore& deviceContext) = 0;
 
