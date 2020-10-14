@@ -1,8 +1,10 @@
 #include <iostream>
 #include <string>
+#include <type_traits>
+
 #include "core/util/enDefines.h"
 #include "core/util/enTypeTraits.h"
-#include <type_traits>
+#include "DirectXTK/include/Audio.h"
 
 int main()
 {
@@ -10,8 +12,9 @@ int main()
     << "signed types "
     << tt::isUnsigned_v<bool> << "\n"
     << tt::isUnsigned_v<char> << '\n'
-    << tt::isUnsigned_v<int> << '\n'
     << tt::isUnsigned_v<short> << '\n'
+    << tt::isUnsigned_v<int> << '\n'
+    << tt::isUnsigned_v<long> << "\n\n"
     << tt::isUnsigned_v<long long> << "\n\n"
     << tt::isUnsigned_v<const bool > << "\n"
     << tt::isUnsigned_v<const char > << '\n'

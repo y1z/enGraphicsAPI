@@ -89,20 +89,11 @@ public:
   virtual void
   setSwapChain(const enSwapChainCore& swapChain) = 0;
 
-  /** @brief prepares a sampler with a texture to be used*/
+  /** @brief prepares a sampler with a texture to be used. */
   virtual void
   setSampler(const enSamplerCore& sampler ,
              const enTextureCore& texture) = 0;
 
-  /** @brief prepares a model for rendering */
-  virtual void
-  setModel(const enModelCore & model) = 0;
-
-  /** @brief prepares a scene for rendering */
-  virtual void
-  setScene(const enSceneCore& scene) = 0;
-
-protected:
 
   /** @brief prepares a mesh for rendering. */
   virtual void
