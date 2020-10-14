@@ -4,7 +4,7 @@
 
 #include "core/util/enDefines.h"
 #include "core/util/enTypeTraits.h"
-#include "DirectXTK/include/Audio.h"
+#include "DDSTextureLoader.h"
 
 int main()
 {
