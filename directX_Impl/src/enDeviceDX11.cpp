@@ -1,10 +1,14 @@
-#include "deviceDX11.h"
-#include "..\include\enDeviceDX11.h"
+#include "directX/include/enDeviceDX11.h"
+#include "core/include/enShaderProgramCore.h"
+#include"core/include/enTextureCore.h"
+
+#include <d3d11.h>
+#include <d3dcompiler.h>
 
 ErrorCode 
 enDeviceDX11::init(enDeviceContextCore& deviceContext)
 {
-    return ErrorCode();
+  return ErrorCode::failedCreation;
 }
 
 enTextureCore* 

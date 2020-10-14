@@ -3,7 +3,7 @@
 #include "core/util/enDefines.h"
 
 /**
- * @class enTexture2DCore : a int3erface to the texture of the api
+ * @class enTexture2DCore : a interface to the texture of the api
  */
 class enTexture2DCore 
 {
