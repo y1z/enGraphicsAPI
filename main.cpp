@@ -4,7 +4,6 @@
 
 #include "core/util/enDefines.h"
 #include "core/util/enTypeTraits.h"
-#include "DDSTextureLoader.h"
 
 int main()
 {
