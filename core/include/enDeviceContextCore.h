@@ -8,17 +8,16 @@ class enVertexBufferCore;// check
 class unsigned32IndexBuffer; // check
 
 class enVertexShaderCore; // check
-class enPixelShaderCore;
-class enShaderProgramCore;
+class enPixelShaderCore;// check
+class enShaderProgramCore; // check
 
-class enDeviceContextCore;
-class enSwapChainCore;
+class enSwapChainCore; // check
 
-class enSamplerCore;
+class enSamplerCore;// check
 
-class enMeshCore;
-class enModelCore;
-class enSceneCore;
+class enMeshCore;// check
+class enModelCore;// check
+class enSceneCore;// check
 
 
 /**
@@ -85,4 +84,30 @@ public:
    */
   virtual void
   setIndexBuffer(const unsigned32IndexBuffer& indexBuffer) = 0;
+
+  /** @brief prepares the swap-chain to be used. */
+  virtual void
+  setSwapChain(const enSwapChainCore& swapChain) = 0;
+
+  /** @brief prepares a sampler with a texture to be used*/
+  virtual void
+  setSampler(const enSamplerCore& sampler ,
+             const enTextureCore& texture) = 0;
+
+  /** @brief prepares a model for rendering */
+  virtual void
+  setModel(const enModelCore & model) = 0;
+
+  /** @brief prepares a scene for rendering */
+  virtual void
+  setScene(const enSceneCore& scene) = 0;
+
+protected:
+
+  /** @brief prepares a mesh for rendering. */
+  virtual void
+  setMesh(const enMeshCore& mesh) = 0;
 };
+
+
+
