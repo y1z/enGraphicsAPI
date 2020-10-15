@@ -25,7 +25,6 @@ class enSceneCore;// check
  */
 class enDeviceContextCore 
 {
-  friend class enDeviceContextDX11;
 public:// functions
   enDeviceContextCore() = default;
   enDeviceContextCore(const enDeviceContextCore &) = delete;

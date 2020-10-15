@@ -15,16 +15,8 @@ m_dx11Factory(nullptr)
 
 enDeviceDX11::~enDeviceDX11() noexcept
 {
-  if( nullptr != m_dx11Device )
-  {
-    m_dx11Device->Release();
-    m_dx11Device = nullptr;
-  }
-  if( nullptr != m_dx11Factory )
-  {
-    m_dx11Factory->Release();
-    m_dx11Factory = nullptr;
-  }
+  SAFE_DX_RELEASE(m_dx11Device)
+  SAFE_DX_RELEASE(m_dx11Factory)
 }
 
 ErrorCode
@@ -32,22 +24,18 @@ enDeviceDX11::init(enDeviceContextCore& deviceContext)
 {
   enDeviceContextDX11* directX11DeviceContext =
     dynamic_cast< enDeviceContextDX11* >(&deviceContext);
-  ErrorCode result;
-  if( nullptr != directX11DeviceContext )
-  {
-    result = ErrorCode::success;
-  }
-  else
+
+  if( nullptr == directX11DeviceContext )
   {
     EN_LOG_DEBUG_INFO("Using a wrong interface, would you kindly use the directX one.")
-    result = ErrorCode::badArgument;
+      return ErrorCode::badArgument;
   }
 
-  result = initInternalFactory();
+  ErrorCode result = initInternalFactory();
   if( ErrorCode::success != result )
   {
     EN_LOG_DEBUG_INFO("The Factory failed to be created.")
-    return result;
+      return result;
   }
 
   IDXGIAdapter1* adapter = createAdapter();
@@ -64,17 +52,10 @@ enDeviceDX11::init(enDeviceContextCore& deviceContext)
     return ErrorCode::badArgument;
   }
 
-  const std::array<const D3D_DRIVER_TYPE, 3> driverOptions = 
-  {
-    D3D_DRIVER_TYPE::D3D_DRIVER_TYPE_HARDWARE,
-    D3D_DRIVER_TYPE::D3D_DRIVER_TYPE_WARP,
-    D3D_DRIVER_TYPE::D3D_DRIVER_TYPE_NULL,
-  };
-
   UINT deviceFlags = 0;
 #if !NDEBUG
   deviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
-  deviceFlags |= D3D11_CREATE_DEVICE_DEBUGGABLE;// requires DirectX feature level 11.1
+  //deviceFlags |= D3D11_CREATE_DEVICE_DEBUGGABLE;// requires DirectX feature level 11.1
 #endif // !NDEBUG
 
   const std::array<const D3D_FEATURE_LEVEL ,3> featureLevels
@@ -83,21 +64,28 @@ enDeviceDX11::init(enDeviceContextCore& deviceContext)
     D3D_FEATURE_LEVEL::D3D_FEATURE_LEVEL_12_0,
     D3D_FEATURE_LEVEL::D3D_FEATURE_LEVEL_11_1,
   };
+
   D3D_FEATURE_LEVEL selectedFeatureLevel;
-  for( const auto dirvers : driverOptions )
+
+  HRESULT deviceCreationResult = D3D11CreateDevice(adapter,
+                                                   D3D_DRIVER_TYPE::D3D_DRIVER_TYPE_UNKNOWN,
+                                                   NULL,
+                                                   deviceFlags,
+                                                   &featureLevels[0],
+                                                   featureLevels.size(),
+                                                   D3D11_SDK_VERSION,
+                                                   &m_dx11Device,
+                                                   &selectedFeatureLevel,
+                                                   &directX11DeviceContext->m_dx11DeviceContext);
+
+  if( S_OK == deviceCreationResult )
   {
-    D3D11CreateDevice(adapter,
-                      dirvers,
-                      NULL,
-                      deviceFlags,
-                      &featureLevels[0],
-                      featureLevels.size(),
-                      D3D11_SDK_VERSION ,
-                      &m_dx11Device,
-                      &selectedFeatureLevel,);
+    result = ErrorCode::success;
   }
-
-
+  else
+  {
+    result = ErrorCode::badArgument;
+  }
   
   return result;
 }

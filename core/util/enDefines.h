@@ -51,23 +51,23 @@ namespace error_handle
     switch( error )
     {
       case ErrorCode::badArgument:
-      std::cerr << "one of the arguments passed is ill-formed\n";
+      std::cerr <<"---> " << "[One of the arguments passed is ill-formed]\n";
       break;
 
       case ErrorCode::failedCreation:
-      std::cerr << "the creation of a object has failed \n";
+      std::cerr <<"---> " << "[The creation of a object has failed] \n";
       break;
 
       case ErrorCode::shaderCompileError:
-      std::cerr << "the shader has failed to compile \n";
+      std::cerr <<"---> " <<"[The shader has failed to compile] \n";
       break;
 
       case ErrorCode::unpreparedForOperation:
-      std::cerr << "the operation cannot happen because something else must happen first\n";
+      std::cerr <<"---> " << "[The operation cannot happen because something else must happen first]\n";
       break;
 
       case ErrorCode::success:
-      std::cerr << "no error occurred\n";
+      std::cerr <<"---> " << "[No error occurred]\n";
       break;
 
       case ErrorCode::needsImplementation:
@@ -89,8 +89,8 @@ namespace error_handle
   {
     logErrorCode(error);
 
-    std::cerr << "\n==========================( message )============================\n"
-      << message << "\n==========================(         )============================\n";
+    std::cerr << "\n==========================( additional info )============================\n\n"
+      << '\t' << message;
     
   }
 

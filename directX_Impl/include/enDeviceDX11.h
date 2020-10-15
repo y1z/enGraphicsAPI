@@ -1,9 +1,6 @@
 #pragma once
 #include "core/include/enDeviceCore.h"
-
-#define NOMINMAX 1
-#include <d3d11.h>
-
+#include "directX_Impl/dx11_utility/dx11Headers.h"
 
 class enDeviceDX11 : public enDeviceCore 
 {
