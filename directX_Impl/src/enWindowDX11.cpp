@@ -1,4 +1,5 @@
 #include "directX_Impl/include/enWindowDX11.h"
+#include "core/util/stringConversions.h"
 
 ErrorCode
 enWindowDX11::init(void* windowHandle,
@@ -8,6 +9,11 @@ enWindowDX11::init(void* windowHandle,
 {
   const HMODULE modInstance = reinterpret_cast< HMODULE > (windowHandle);
 
+#if UNICODE || _UNICODE
+  const std::wstring activeWindowName = convertStringToWString(windowName);
+#else
+  const std::string activeWindowName{windowName};
+#endif // UNICODE || _UNICODE
   WNDCLASSEX windowDescriptor;
   windowDescriptor.cbSize = sizeof(WNDCLASSEX);
   windowDescriptor.style = CS_HREDRAW | CS_VREDRAW;
@@ -18,15 +24,54 @@ enWindowDX11::init(void* windowHandle,
   windowDescriptor.hIcon = LoadIcon(NULL, IDI_APPLICATION);
   windowDescriptor.hCursor = LoadCursor(NULL, IDC_CROSS);
   windowDescriptor.hbrBackground = ( HBRUSH )(COLOR_WINDOW + 1);
+  windowDescriptor.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+  windowDescriptor.lpszClassName = activeWindowName.c_str();
   windowDescriptor.lpszMenuName = NULL;
-  windowDescriptor.lpszMenuName = NULL;
+  windowDescriptor.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
 
 
-  return ErrorCode::failedCreation;
+  if( !RegisterClassEx(&windowDescriptor) )
+  {
+    EN_LOG_DEBUG_INFO("something failed in the Registration of the window");
+    return ErrorCode::failedCreation;
+  }
+
+  // Create window
+  m_width = windowWidth;
+  m_height = windowHeight;
+  RECT rc = { 0, 0,  m_width , m_height };
+  AdjustWindowRect(&rc,
+                   WS_OVERLAPPEDWINDOW,
+                   FALSE);
+
+  m_handle = CreateWindow(activeWindowName.c_str(),
+                          activeWindowName.c_str(),
+                          WS_OVERLAPPEDWINDOW,
+                          CW_DEFAULT,
+                          CW_DEFAULT,
+                          rc.right - rc.left,
+                          rc.bottom - rc.top,
+                          NULL,
+                          NULL,
+                          modInstance,
+                          NULL);
+
+  if( !m_handle )
+  {
+
+    EN_LOG_DEBUG_INFO("something failed in the creation of the window");
+    return ErrorCode::failedCreation;
+  }
+
+  ShowWindow(m_handle, SW_SHOW);
+  UpdateWindow(m_handle);
+
+  return ErrorCode::success;
 }
 
 ErrorCode
-enWindowDX11::resizeWindow(const int32 windowWidth, const int32 windowHeight)
+enWindowDX11::resizeWindow(const int32 windowWidth,
+                           const int32 windowHeight)
 {
   return ErrorCode();
 }
@@ -34,7 +79,7 @@ enWindowDX11::resizeWindow(const int32 windowWidth, const int32 windowHeight)
 void*
 enWindowDX11::getWindowHandle()
 {
-  return nullptr;
+  return m_handle;
 }
 
 bool

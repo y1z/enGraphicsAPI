@@ -54,5 +54,6 @@ public:
 private:
 
   HWND m_handle;
+  HMODULE m_module;
 };
 

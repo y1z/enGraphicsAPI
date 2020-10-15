@@ -26,23 +26,25 @@ convertWStringToString(std::wstring_view wideString)
 }
 
 /**
-*@brief converts a string/const char* to it's wstring equivalent
+* @brief converts a string/const char* to it's wstring equivalent
 */
 static std::wstring
 convertStringToWString(std::string_view String)
 {
-  std::wstring Result(String.length() + 1, '\0');
+  std::wstring Result(String.length() + 1, L'\0');
 
   const std::size_t checkForError = std::mbstowcs(Result.data(),
                                                   String.data(),
                                                   String.length());
 
   assert(checkForError != static_cast< std::size_t >(-1) && "invalid string conversion");
-
   return Result;
 }
 
 
+/**
+ * @brief load the contents of a file on to a std::string.
+*/
 static std::string
 loadFileToString(std::string_view filePath)
 {
@@ -63,8 +65,10 @@ loadFileToString(std::string_view filePath)
   }
   return Result;
 }
-/*************/
 
+/**
+ * @brief load the contents of a file on to a std::wstring.
+*/
 static std::string
 loadFileToString(std::wstring_view filePath)
 {
