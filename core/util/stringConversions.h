@@ -33,11 +33,16 @@ convertStringToWString(std::string_view String)
 {
   std::wstring Result(String.length() + 1, L'\0');
 
-  const std::size_t checkForError = std::mbstowcs(Result.data(),
-                                                  String.data(),
-                                                  String.length());
+  size_t numCharConverted = 0;
+  wchar_t* ptrToBuffer = &Result[0];
+  const errno_t checkForError = mbstowcs_s(&numCharConverted,
+                                           ptrToBuffer,
+                                           String.length(),
+                                           String.data(),
+                                           String.length());
 
-  assert(checkForError != static_cast< std::size_t >(-1) && "invalid string conversion");
+  assert(checkForError == 0 && "invalid string conversion ");
+
   return Result;
 }
 

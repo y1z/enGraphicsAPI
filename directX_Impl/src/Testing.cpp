@@ -1,7 +1,8 @@
-#include "directX_Impl/include/Demo.h"
+#include "directX_Impl/include/Testing.h"
 #include "directX_Impl/include/enDeviceDX11.h"
 #include "directX_Impl/include/enDeviceContextDX11.h"
 #include "directX_Impl/include/enSwapChainDX11.h"
+#include "directX_Impl/include/enWindowDX11.h"
 #include <memory>
 
 using std::make_unique;
@@ -28,4 +29,18 @@ startDeviceTest()
   //SAFE_DELETE(swapChain)
 
   return currentErrorCode;
+}
+
+ErrorCode 
+startWindowTest()
+{
+  unique_ptr<enWindowCore> window = make_unique<enWindowDX11>();
+
+  HMODULE modHandle = GetModuleHandle(NULL);
+
+  const ErrorCode result = window->init(&modHandle ,"test window" ,1280 ,700 );
+
+  while( true );
+
+  return result ;
 }
