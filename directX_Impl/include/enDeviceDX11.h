@@ -6,6 +6,7 @@ class enDeviceDX11 : public enDeviceCore
 {
 public:
   friend class enDeviceContextDX11;
+
 public:
   enDeviceDX11();
   enDeviceDX11(const enDeviceDX11&) = delete;
@@ -39,7 +40,9 @@ public:
 
   /** @returns a pointer to a instance of enSwapChainCore used to manipulate derived classes*/
   [[nodiscard]] enSwapChainCore*
-  createSwapChain()override;
+  createSwapChain(const uint32 screenWidth,
+                  const uint32 screenHeight,
+                  int format)override;
 
   /** @returns a pointer to a instance of enInputLayoutCore used to manipulate derived classes*/
   [[nodiscard]] enInputLayoutCore*

@@ -8,12 +8,12 @@ class enSwapChainCore
 {
 public://constructors
   enSwapChainCore() = default;
-  enSwapChainCore(const enSwapChainCore&) = default;
+  enSwapChainCore(const enSwapChainCore&) = delete;
   enSwapChainCore(enSwapChainCore&&) noexcept = default;
   virtual ~enSwapChainCore() noexcept = default;
 public:// operators
 
-  enSwapChainCore& operator= (const enSwapChainCore&) = default;
+  enSwapChainCore& operator= (const enSwapChainCore&) = delete;
   enSwapChainCore& operator= (enSwapChainCore&&) noexcept = default;
 
 public:// functions
@@ -23,6 +23,15 @@ public:// functions
    */
   virtual ErrorCode
   setRenderTarget(enRenderTargetCore& rt) = 0;
+
+  /**
+   * @brief changes the size of the internal buffer to a new one
+   */
+  virtual ErrorCode
+  resizeSwapChain(uint32 width,
+                  uint32 height,
+                  enRenderTargetCore& rt) = 0;
+
 
 
   /**

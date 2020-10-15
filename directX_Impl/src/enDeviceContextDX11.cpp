@@ -4,13 +4,9 @@ enDeviceContextDX11::enDeviceContextDX11()
   :m_dx11DeviceContext(nullptr)
 {}
 
-enDeviceContextDX11::~enDeviceContextDX11()
+enDeviceContextDX11::~enDeviceContextDX11() noexcept 
 {
-  if( nullptr != m_dx11DeviceContext )
-  {
-    m_dx11DeviceContext->Release();
-    m_dx11DeviceContext = nullptr;
-  }
+  SAFE_DX_RELEASE(m_dx11DeviceContext);
 }
 
 void enDeviceContextDX11::setTexture(const enTextureCore& texture)

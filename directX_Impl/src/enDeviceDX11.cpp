@@ -1,7 +1,10 @@
 #include "directX_Impl/include/enDeviceDX11.h"
 #include "directX_Impl/include/enDeviceContextDX11.h"
+#include "directX_Impl/include/enSwapChainDX11.h"
+
 #include "core/include/enShaderProgramCore.h"
 #include "core/include/enTextureCore.h"
+
 
 #include <array>
 #include <d3dcompiler.h>
@@ -109,8 +112,37 @@ enDeviceDX11::createRenderTarget(const uint32 width, const uint32 height)
 }
 
 enSwapChainCore*
-enDeviceDX11::createSwapChain()
+enDeviceDX11::createSwapChain(const uint32 screenWidth,
+                              const uint32 screenHeight,
+                              int format)
 {
+  DXGI_SWAP_CHAIN_DESC swapDescriptor;
+  std::memset(&swapDescriptor ,0,sizeof(swapDescriptor));
+  swapDescriptor.BufferDesc.Format = static_cast< DXGI_FORMAT > (format);
+  swapDescriptor.BufferCount = 1;
+  swapDescriptor.BufferDesc.Width = screenWidth;
+  swapDescriptor.BufferDesc.Height = screenHeight;
+  swapDescriptor.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+  swapDescriptor.BufferDesc.RefreshRate.Numerator = 60;
+  swapDescriptor.BufferDesc.RefreshRate.Denominator = 1;
+  swapDescriptor.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+  //swapDescriptor.OutputWindow = g_hWnd;
+  swapDescriptor.SampleDesc.Count = 1;
+  swapDescriptor.SampleDesc.Quality = 0;
+  swapDescriptor.Windowed = TRUE;
+
+
+  IDXGISwapChain* dx11SwapChain;
+  const HRESULT swapChainCreationResult =
+    m_dx11Factory->CreateSwapChain(m_dx11Device,
+                                   &swapDescriptor,
+                                   &dx11SwapChain);
+
+  if( S_OK == swapChainCreationResult )
+  {
+    return new enSwapChainDX11(dx11SwapChain);
+  }
+
   return nullptr;
 }
 

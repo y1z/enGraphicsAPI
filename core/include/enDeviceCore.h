@@ -56,11 +56,14 @@ public:
 
   /** @returns a pointer to a instance of enRenderTargetCore used to manipulate derived classes*/
   virtual enRenderTargetCore*
-  createRenderTarget(const uint32 width, const uint32 height) = 0;
+  createRenderTarget(const uint32 width,
+                     const uint32 height) = 0;
 
   /** @returns a pointer to a instance of enSwapChainCore used to manipulate derived classes*/
   virtual enSwapChainCore*
-  createSwapChain() = 0;
+  createSwapChain(const uint32 screenWidth,
+                  const uint32 screenHeight,
+                  int format) = 0;
 
   /** @returns a pointer to a instance of enInputLayoutCore used to manipulate derived classes*/
   virtual enInputLayoutCore*

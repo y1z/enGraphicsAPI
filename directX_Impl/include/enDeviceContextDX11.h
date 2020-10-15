@@ -1,10 +1,11 @@
 #pragma once
 #include "core/include/enDeviceContextCore.h"
-
-#define NOMINMAX 1
-#include "d3d11.h"
+#include "directX_Impl/dx11_utility/dx11Headers.h"
 
 
+/**
+ * @brief DirectX implementation of the device context.
+ */
 class enDeviceContextDX11 : public enDeviceContextCore 
 {
 public:
