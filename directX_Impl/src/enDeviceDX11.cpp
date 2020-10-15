@@ -58,7 +58,7 @@ enDeviceDX11::init(enDeviceContextCore& deviceContext)
   UINT deviceFlags = 0;
 #if !NDEBUG
   deviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
-  //deviceFlags |= D3D11_CREATE_DEVICE_DEBUGGABLE;// requires DirectX feature level 11.1
+  deviceFlags |= D3D11_CREATE_DEVICE_DEBUGGABLE;// requires DirectX feature level 11.1
 #endif // !NDEBUG
 
   const std::array<const D3D_FEATURE_LEVEL ,3> featureLevels
