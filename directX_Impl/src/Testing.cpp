@@ -36,11 +36,36 @@ startWindowTest()
 {
   unique_ptr<enWindowCore> window = make_unique<enWindowDX11>();
 
-  HMODULE modHandle = GetModuleHandle(NULL);
+  HMODULE modHandle = GetModuleHandle(nullptr);
 
   const ErrorCode result = window->init(&modHandle ,"test window" ,1280 ,700 );
 
   while( true );
 
   return result ;
+}
+
+#include <Windows.h>
+
+static LRESULT CALLBACK 
+windowProc (HWND handel, UINT message , WPARAM wparam, LPARAM lparam)
+{
+  PAINTSTRUCT ps;
+  HDC hdc;
+  switch( message )
+  {
+   case WM_PAINT:
+   hdc = BeginPaint(handel, &ps);
+   EndPaint(handel, &ps);
+   break;
+
+    case WM_DESTROY:
+    PostQuitMessage(0);
+    break;
+    default:
+    return DefWindowProc(handel, message, wparam, lparam);
+  }
+
+
+  return DefWindowProc(handel, message, wparam, lparam);
 }

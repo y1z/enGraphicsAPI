@@ -35,11 +35,12 @@ convertStringToWString(std::string_view String)
 
   size_t numCharConverted = 0;
   wchar_t* ptrToBuffer = &Result[0];
+
   const errno_t checkForError = mbstowcs_s(&numCharConverted,
                                            ptrToBuffer,
-                                           String.length(),
-                                           String.data(),
-                                           String.length());
+                                            Result.length(),
+                                           &String.front(),
+                                           Result.length());
 
   assert(checkForError == 0 && "invalid string conversion ");
 
