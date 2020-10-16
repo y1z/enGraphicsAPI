@@ -41,7 +41,6 @@ startWindowTest()
   const ErrorCode result = window->init(&modHandle ,"test window" ,1280 ,700 );
 
   while( true );
-
   return result ;
 }
 

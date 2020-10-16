@@ -39,6 +39,71 @@ enum class MeshType : uint32
   pointMesh,
 };
 
+/**
+ * @brief every value represents a key on the keyboard
+ */
+enum class KeyInput : uint32 
+{
+  nullInput = 0u,
+  leftShift,
+  leftAlt,
+  leftCtrl,
+  rightShift,
+  rightAlt,
+  rightCtrl,
+  shift,
+  alt,
+  tab,
+  tilde,
+  upArrow,
+  downArrow,
+  leftArrow,
+  rightArrow,
+  enter,
+  backSpace,
+  escape,
+  a = 'a',
+  b = 'b',
+  c = 'c',
+  d = 'd',
+  e = 'e',
+  f = 'f',
+  g = 'g',
+  h = 'h',
+  i = 'i',
+  j = 'j',
+  k = 'k',
+  l = 'l',
+  m = 'm',
+  n = 'n',
+  o = 'o',
+  p = 'p',
+  q = 'q',
+  r = 'r',
+  s = 's',
+  t = 't',
+  u = 'u',
+  v = 'v',
+  w = 'w',
+  x = 'x',
+  y = 'y',
+  z = 'z',
+  num0 = '0',
+  num1 = '1',
+  num2 = '2',
+  num3 = '3',
+  num4 = '4',
+  num5 = '5',
+  num6 = '6',
+  num7 = '7',
+  num8 = '8',
+  num9 = '9',
+  plus = '+',
+  minus = '-',
+  asterisk = '*',
+  forwardSlash = '/',
+  backSlash = '\\',
+};
 
 /**
  * functions for the management of error codes
@@ -221,6 +286,13 @@ struct enSamplerData
   float maxLod = { 0.0f };//<! highest level of detail
 };
 
+
+struct enInputData 
+{
+  KeyInput keyPressed;
+  KeyInput modifier;
+  bool holding;
+};
 
 /**
  * Utility TYPE DEFS
