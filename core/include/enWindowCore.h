@@ -1,6 +1,13 @@
 #pragma once
 #include "core/util/enDefines.h"
 
+class enInputManagerCore;
+
+
+/**
+ * @brief a interface that handles all operations related with the 
+ * creation and manipulation of a window.
+ */
 class enWindowCore 
 {
 public:
@@ -18,6 +25,7 @@ public:
    * @brief initializes the window
    * @param windowHandle : a implementation defined pointer to a handle used to control
    * the window 
+   * @param inputManPtr : used to setup input with the window.
    * @param windowWidth : how wide the window is going to be.
    * @param windowHeight : how tall the window is going to be.
    * @param windowName : the name of the window.
@@ -25,6 +33,7 @@ public:
   virtual ErrorCode
   init(void* windowHandle,
        const char* windowName,
+       enInputManagerCore * inputManPtr,
        const int32 windowWidth,
        const int32 windowHeight) = 0;
 

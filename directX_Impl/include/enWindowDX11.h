@@ -14,20 +14,26 @@ class enWindowDX11 : public enWindowCore
 {
 public:
   using windProcType = LRESULT(CALLBACK*)(HWND, UINT, WPARAM, LPARAM);
-public:
+public://constructor
+  enWindowDX11();
+  enWindowDX11(const enWindowDX11&) = delete;
+  enWindowDX11(enWindowDX11&& other) noexcept;
+
 public:
 
   /**
   * @brief initializes the window
   * @param windowHandle : a implementation defined pointer to a handle used to control
   * the window
+  * @param windowName : the name of the window.
+  * @param inputManPtr : used to setup input with the window.
   * @param windowWidth : how wide the window is going to be.
   * @param windowHeight : how tall the window is going to be.
-  * @param windowName : the name of the window.
   */
   ErrorCode
   init(void* windowHandle,
        const char* windowName,
+       enInputManagerCore * inputManPtr,
        const int32 windowWidth,
        const int32 windowHeight) override;
 

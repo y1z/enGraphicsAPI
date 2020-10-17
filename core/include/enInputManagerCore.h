@@ -1,12 +1,11 @@
 #pragma once
 #include "core/util/enDefines.h"
-#include "core/util/enModule.h"
 
 
 /**
- * @brife takes care of all user input operations
+ * @brife a interface that takes care of all user input operations
  */
-class enInputManagerCore : public enModule< enInputManagerCore >
+class enInputManagerCore 
 {
 public:
   enInputManagerCore()
@@ -30,7 +29,7 @@ public:
   virtual void
   updateInput() = 0;
 
-private:
+protected:
 
   /**
    * @brief controls how much time the input should wait before returning 

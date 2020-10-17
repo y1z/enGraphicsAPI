@@ -3,6 +3,8 @@
 #include "directX_Impl/include/enDeviceContextDX11.h"
 #include "directX_Impl/include/enSwapChainDX11.h"
 #include "directX_Impl/include/enWindowDX11.h"
+#include "directX_Impl/include/enInputManagerDX11.h"
+
 #include <memory>
 
 using std::make_unique;
@@ -34,13 +36,41 @@ startDeviceTest()
 ErrorCode 
 startWindowTest()
 {
+  enInputManagerDX11::activateModule(nullptr);
   unique_ptr<enWindowCore> window = make_unique<enWindowDX11>();
 
   HMODULE modHandle = GetModuleHandle(nullptr);
 
-  const ErrorCode result = window->init(&modHandle ,"test window" ,1280 ,700 );
+  const ErrorCode result = window->init(&modHandle,
+                                        "test window",
+                                        enInputManagerDX11::getInstancePtr(),
+                                        1280,
+                                        700);
 
-  while( true );
+  enInputManagerCore* input = enInputManagerDX11::getInstancePtr();
+
+
+  std::cout << R"(press 'i' to close this window or press every other English letter for fun)";
+  KeyInput currentKeyInput = KeyInput::nullInput;
+  KeyInput lastInput = KeyInput::nullInput;
+
+  while( true )
+  {
+    input->updateInput();
+    currentKeyInput = input->getLastPressedKey();
+    if( KeyInput::i == input->getLastPressedKey() )
+    {
+      break;
+    }
+    else if(currentKeyInput !=  lastInput)
+    {
+      std::cout <<
+      "{ " << static_cast< unsigned char >(input->getLastPressedKey()) << " } " << '\n';
+      lastInput = currentKeyInput;
+    }
+  }
+
+  enInputManagerDX11::deactivateModule();
   return result ;
 }
 

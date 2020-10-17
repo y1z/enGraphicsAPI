@@ -1,13 +1,41 @@
 #include "directX_Impl/include/enWindowDX11.h"
+#include "directX_Impl/include/enInputManagerDX11.h"
 #include "core/util/stringConversions.h"
+
+enWindowDX11::enWindowDX11()
+  :enWindowCore()
+{}
+
+enWindowDX11::enWindowDX11(enWindowDX11 && other) noexcept
+  :m_handle(other.m_handle),
+  m_module(other.m_module)
+{
+  other.m_handle = nullptr;
+  other.m_module = nullptr;
+}
 
 ErrorCode
 enWindowDX11::init(void* windowHandle,
                    const char* windowName,
+                   enInputManagerCore* inputManPtr,
                    const int32 windowWidth,
                    const int32 windowHeight)
+
 {
   const HMODULE modInstance = reinterpret_cast< HMODULE > (windowHandle);
+
+  auto* dx11InputMan = dynamic_cast<enInputManagerDX11*>(inputManPtr);
+  if( nullptr == dx11InputMan )
+  {
+    EN_LOG_DEBUG_INFO("Requires that you use directX implementation of the input-manager");
+    return ErrorCode::wrongImplementation;
+  }
+
+  if( nullptr == dx11InputMan->getProcPtr() )
+  {
+    EN_LOG_DEBUG_INFO("Requires that the Input manager module be activated ");
+    return ErrorCode::unpreparedForOperation;
+  }
 
 #if UNICODE || _UNICODE
   const std::wstring activeWindowName = convertStringToWString(windowName);
@@ -17,7 +45,7 @@ enWindowDX11::init(void* windowHandle,
   WNDCLASSEX windowDescriptor;
   windowDescriptor.cbSize = sizeof(WNDCLASSEX);
   windowDescriptor.style = CS_HREDRAW | CS_VREDRAW;
-  windowDescriptor.lpfnWndProc = DefWindowProc;
+  windowDescriptor.lpfnWndProc = dx11InputMan->getProcPtr();
   windowDescriptor.cbClsExtra = 0;
   windowDescriptor.cbWndExtra = 0;
   windowDescriptor.hInstance = modInstance;
@@ -68,6 +96,7 @@ enWindowDX11::init(void* windowHandle,
 
   return ErrorCode::success;
 }
+
 
 ErrorCode
 enWindowDX11::resizeWindow(const int32 windowWidth,

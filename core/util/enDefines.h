@@ -29,6 +29,7 @@ enum class ErrorCode : int32
   badArgument = -3, /*!< means that one of the arguments passed to a function is ill-formed */
   unpreparedForOperation = -4, /*!< means that the function requires something else to happen before it works*/
   needsImplementation = -5,
+  wrongImplementation = -6,
 };
 
 enum class MeshType : uint32 
@@ -45,20 +46,25 @@ enum class MeshType : uint32
 enum class KeyInput : uint32 
 {
   nullInput = 0u,
+
   leftShift,
   leftAlt,
   leftCtrl,
+
   rightShift,
   rightAlt,
   rightCtrl,
+
   shift,
   alt,
   tab,
   tilde,
+
   upArrow,
   downArrow,
   leftArrow,
   rightArrow,
+
   enter,
   backSpace,
   escape,
@@ -116,31 +122,34 @@ namespace error_handle
     switch( error )
     {
       case ErrorCode::badArgument:
-      std::cerr <<"---> " << "[One of the arguments passed is ill-formed]\n";
+      std::cerr << "---> " << "[One of the arguments passed is ill-formed]\n";
       break;
 
       case ErrorCode::failedCreation:
-      std::cerr <<"---> " << "[The creation of a object has failed] \n";
+      std::cerr << "---> " << "[The creation of a object has failed] \n";
       break;
 
       case ErrorCode::shaderCompileError:
-      std::cerr <<"---> " <<"[The shader has failed to compile] \n";
+      std::cerr << "---> " << "[The shader has failed to compile] \n";
       break;
 
       case ErrorCode::unpreparedForOperation:
-      std::cerr <<"---> " << "[The operation cannot happen because something else must happen first]\n";
+      std::cerr << "---> " << "[The operation cannot happen because something else must happen first]\n";
       break;
 
       case ErrorCode::success:
-      std::cerr <<"---> " << "[No error occurred]\n";
+      std::cerr << "---> " << "[No error occurred]\n";
       break;
 
       case ErrorCode::needsImplementation:
-      std::cerr << "operation does NOT have a implementation\n";
+      std::cerr << "---> " << "operation does NOT have a implementation\n";
       break;
 
+      case ErrorCode::wrongImplementation:
+      std::cerr << "---> " << "trying to use the wrong implementation\n";
+      break;
       default:
-      std::cerr << "un-handled Error please add the case\n";
+      std::cerr << "---> " << "un-handled Error please add the case\n";
       break;
     }
   }
