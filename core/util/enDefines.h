@@ -289,6 +289,13 @@ struct enSamplerData
 
 struct enInputData 
 {
+  enInputData(const KeyInput _keyPressed,
+              const KeyInput _modifier = KeyInput::nullInput,
+              bool _holding = false)
+    :keyPressed(_keyPressed),
+    modifier(_modifier),
+    holding(_holding)
+  {}
   KeyInput keyPressed;
   KeyInput modifier;
   bool holding;
